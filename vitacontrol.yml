@@ -1,0 +1,8 @@
+vitacontrol:
+  attributes: 0
+  version:
+    major: 1
+    minor: 0
+  main:
+    start: moduleStart
+    stop: moduleStop
