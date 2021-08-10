@@ -56,8 +56,8 @@ void SwitchProController::processReport(uint8_t *buffer, size_t length)
     if (report->capture) controlData.buttons |= SCE_CTRL_EXT1;
 
     // Map the sticks
-    controlData.leftX  = report->leftX  >> 4;
-    controlData.leftY  = report->leftY  >> 4;
+    controlData.leftY  = report->leftX  >> 4;
+    controlData.leftX  = report->leftY  >> 4;
     controlData.rightX = report->rightX >> 4;
     controlData.rightY = report->rightY >> 4;
 
