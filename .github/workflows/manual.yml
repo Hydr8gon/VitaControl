@@ -1,0 +1,39 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Vita SDK
+      run: |
+        git clone https://github.com/vitasdk/vdpm
+        cd vdpm
+        ./bootstrap-vitasdk.sh
+        ./install-all.sh
+      env:
+        VITASDK: /usr/local/vitasdk
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Compile
+      run: |
+        mkdir -p build
+        cd build
+        cmake ..
+        make -j$(nproc)
+      env:
+        VITASDK: /usr/local/vitasdk
+    - name: Upload
+      uses: actions/upload-artifact@master
+      with:
+        name: vitacontrol
+        path: build/vitacontrol.skprx
