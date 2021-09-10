@@ -5,7 +5,7 @@ Use bluetooth controllers on your Vita!
 VitaControl aims to support a wide variety of bluetooth controllers on the PlayStation Vita, as well as making it easy to add support for new ones. Pull requests are welcome!
 
 ### Downloads
-Automatic builds are provided via GitHub Actions; to download them, you'll need to be signed in with a GitHub account.
+Automatic builds are provided via GitHub Actions; you can download the latest one from the [releases page](https://github.com/Hydr8gon/VitaControl/releases).
 
 ### Usage
 Place `vitacontrol.skprx` in the `ur0:tai/` directory on your Vita. Open `config.txt` in the same folder and add `ur0:tai/vitacontrol.skprx` under the `*KERNEL` header. Reboot the Vita and pair your controllers through the Settings app!

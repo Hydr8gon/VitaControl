@@ -29,7 +29,32 @@ jobs:
       env:
         VITASDK: /usr/local/vitasdk
     - name: Upload
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       with:
         name: vitacontrol
         path: build/vitacontrol.skprx
+
+  update-release:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Delete old release
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get artifacts
+      uses: actions/download-artifact@v2
+    - name: Package artifacts
+      run: for i in ./*; do zip -r -j ${i}.zip $i; done
+    - name: Create new release
+      uses: ncipollo/release-action@v1
+      with:
+        name: Rolling Release
+        body: These are automatically updated builds of the latest commit.
+        artifacts: "*.zip"
+        tag: release
+        token: ${{ secrets.GITHUB_TOKEN }}
