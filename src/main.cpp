@@ -100,9 +100,9 @@ DECL_FUNC_HOOK(sceCtrlGetBatteryInfo, int port, uint8_t *batt)
     {
         // Override the battery level for connected controllers
         uint8_t data;
-        ksceKernelMemcpyUserToKernel(&data, (uintptr_t)batt, sizeof(uint8_t));
+        ksceKernelMemcpyUserToKernel(&data, (void*)batt, sizeof(uint8_t));
         data = controllers[port - 1]->getBatteryLevel();
-        ksceKernelMemcpyKernelToUser((uintptr_t)batt, &data, sizeof(uint8_t));
+        ksceKernelMemcpyKernelToUser((void*)batt, &data, sizeof(uint8_t));
         return 0;
     }
 
@@ -219,14 +219,14 @@ DECL_FUNC_HOOK(sceMotionGetState, SceMotionState *state)
 
         // Set the acceleration and velocity from the controller
         SceMotionState data;
-        ksceKernelMemcpyUserToKernel(&data, (uintptr_t)state, sizeof(SceMotionState));
+        ksceKernelMemcpyUserToKernel(&data, (void*)state, sizeof(SceMotionState));
         data.acceleration.x    = motionState->accelerX;
         data.acceleration.y    = motionState->accelerY;
         data.acceleration.z    = motionState->accelerZ;
         data.angularVelocity.x = motionState->velocityX;
         data.angularVelocity.y = motionState->velocityY;
         data.angularVelocity.z = motionState->velocityZ;
-        ksceKernelMemcpyKernelToUser((uintptr_t)state, &data, sizeof(SceMotionState));
+        ksceKernelMemcpyKernelToUser((void*)state, &data, sizeof(SceMotionState));
     }
 
     return ret;
