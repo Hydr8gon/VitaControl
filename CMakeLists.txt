@@ -20,6 +20,7 @@ add_executable(${PROJECT_NAME}
   src/controllers/dualshock4_controller.cpp
   src/controllers/dualsense_controller.cpp
   src/controllers/xbox_one_controller.cpp
+  src/controllers/xbox_one_controller_2016.cpp
   src/controllers/switch_pro_controller.cpp
 )
 
