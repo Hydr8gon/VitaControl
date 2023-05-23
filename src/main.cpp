@@ -6,6 +6,8 @@
 #include <psp2kern/ctrl.h>
 #include <psp2kern/kernel/modulemgr.h>
 #include <psp2kern/kernel/threadmgr.h>
+#include <psp2kern/kernel/suspend.h> 
+#include <psp2kern/power.h> 
 
 #include "controller.h"
 #include "mempool.h"
@@ -290,7 +292,12 @@ static int bluetoothCallback(int notifyId, int notifyCount, int notifyArg, void 
             break;
 
         case 0x0A: // Reply to read request
+            //make the screen doesn't go off and prevent sleep on each input (this doesn't makes the same function of nosleep)
+            scePowerRequestDisplayOn();
+            ksceKernelPowerTick(SCE_KERNEL_POWER_TICK_DISABLE_AUTO_SUSPEND)
+                
             // Process the received input report and request another
+                 
             if (controllers[cont])
             {
                 controllers[cont]->processReport(buffer, sizeof(buffer));
