@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstring>
 #include <taihen.h>
 #include <psp2/motion.h>
@@ -5,6 +6,7 @@
 #include <psp2kern/bt.h>
 #include <psp2kern/ctrl.h>
 #include <psp2kern/kernel/modulemgr.h>
+#include <psp2kern/kernel/suspend.h>
 #include <psp2kern/kernel/threadmgr.h>
 
 #include "controller.h"
@@ -16,6 +18,9 @@
 #define TOUCHSCREEN_HEIGHT 1080
 
 #define FLAG_EXIT (1 << 0)
+
+#define AXIS_MOVED(axis) \
+    (abs((int8_t)(axis - 128)) > 20)
 
 // Redefinition for C++; requires type to specify parameters
 #undef TAI_CONTINUE
@@ -290,11 +295,18 @@ static int bluetoothCallback(int notifyId, int notifyCount, int notifyArg, void 
             break;
 
         case 0x0A: // Reply to read request
-            // Process the received input report and request another
             if (controllers[cont])
             {
+                // Process the received input report and request another
                 controllers[cont]->processReport(buffer, sizeof(buffer));
                 controllers[cont]->requestReport(HID_REQUEST_READ, buffer, sizeof(buffer));
+
+                // Keep the screen awake when inputs are pressed
+                const ControlData *c = controllers[cont]->getControlData();
+                const TouchData *t = controllers[cont]->getTouchData();
+                if (c->buttons || t->touchActive[0] || t->touchActive[1] || AXIS_MOVED(c->leftX) ||
+                    AXIS_MOVED(c->leftY) || AXIS_MOVED(c->rightX) || AXIS_MOVED(c->rightY))
+                    ksceKernelPowerTick(SCE_KERNEL_POWER_TICK_DEFAULT);
             }
             break;
 

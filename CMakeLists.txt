@@ -27,6 +27,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   SceBtForDriver_stub
   SceCtrlForDriver_stub
+  SceKernelSuspendForDriver_stub
   SceSysclibForDriver_stub
   SceSysmemForDriver_stub
   SceThreadmgrForDriver_stub
