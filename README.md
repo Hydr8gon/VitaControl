@@ -14,6 +14,7 @@ Place `vitacontrol.skprx` in the `ur0:tai/` directory on your Vita. Open `config
 * Sony DualShock 3 Controller
 * Sony DualShock 4 Controller
 * Sony DualSense Controller
+* Sony DualSense Edge Controller
 * Microsoft Xbox One Controller
 * Nintendo Switch Pro Controller
 

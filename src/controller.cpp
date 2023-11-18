@@ -28,6 +28,7 @@ Controller *Controller::makeController(uint32_t mac0, uint32_t mac1, int port)
         DECL_CONTROLLER(0x054C, 0x05C4, DualShock4Controller);
         DECL_CONTROLLER(0x054C, 0x09CC, DualShock4Controller);
         DECL_CONTROLLER(0x054C, 0x0CE6, DualSenseController);
+        DECL_CONTROLLER(0x054C, 0x0DF2, DualSenseController);
         DECL_CONTROLLER(0x045E, 0x02E0, XboxOneController2016);
         DECL_CONTROLLER(0x045E, 0x02FD, XboxOneController);
         DECL_CONTROLLER(0x045E, 0x0B00, XboxOneController);
