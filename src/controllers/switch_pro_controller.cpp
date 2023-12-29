@@ -60,9 +60,10 @@ void SwitchProController::processReport(uint8_t *buffer, size_t length)
     controlData.leftY  = report->leftY  >> 4;
     controlData.rightX = report->rightX >> 4;
     controlData.rightY = report->rightY >> 4;
+
     // Reverse up and down
-    controlData.leftY  = 255-controlData.leftY;
-    controlData.rightY  = 255-controlData.rightY;
+    controlData.leftY  = 255 - controlData.leftY;
+    controlData.rightY = 255 - controlData.rightY;
 
     // Map the motion controls
     motionState.accelerX  = report->accelerX;
